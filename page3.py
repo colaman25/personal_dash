@@ -17,6 +17,8 @@ def write_to_df_calories():
     conn2 = st.connection('s3', type=FilesConnection)
     with conn2.open("hylau-personal-dashboard-data/Calories_Daily.csv", mode='wb') as f:
         st.session_state.df2.to_csv(f)
+    f.close()
+
 
 if 'df2' not in st.session_state:
     conn2 = st.connection('s3', type=FilesConnection)

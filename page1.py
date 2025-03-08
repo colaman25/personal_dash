@@ -17,6 +17,7 @@ def write_to_df_lapse():
     conn1 = st.connection('s3', type=FilesConnection)
     with conn1.open("hylau-personal-dashboard-data/Lapse_Data.csv", mode='wb') as f:
         st.session_state.df1.to_csv(f)
+    f.close()
 
 if 'df1' not in st.session_state:
     conn1 = st.connection('s3', type=FilesConnection)
