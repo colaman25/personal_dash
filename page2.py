@@ -4,14 +4,14 @@ import numpy as np
 import time
 from st_files_connection import FilesConnection
 
-conn = st.connection('s3', type=FilesConnection)
-df = conn.read("hylau-personal-dashboard-data/Lapse_Data.csv", input_format="csv", ttl=600)
-df.set_index('Date', inplace=True)
-df.sort_index(ascending=True, inplace=True)
+conn1 = st.connection('s3', type=FilesConnection)
+df1 = conn1.read("hylau-personal-dashboard-data/Lapse_Data.csv", input_format="csv", ttl=600)
+df1.set_index('Date', inplace=True)
+df1.sort_index(ascending=True, inplace=True)
 
-df['Minutes_Avg_Month'] = df['Minutes'].rolling(window=30).mean()
-df['Minutes_Avg_CMA'] = df['Minutes'].expanding().mean()
-overall_mean = df['Minutes'].mean()
+df1['Minutes_Avg_Month'] = df1['Minutes'].rolling(window=30).mean()
+df1['Minutes_Avg_CMA'] = df1['Minutes'].expanding().mean()
+overall_mean = df1['Minutes'].mean()
 
 st.write(f'AVERAGE: {overall_mean:.2f}')
-st.line_chart(df[['Minutes_Avg_Month', 'Minutes_Avg_CMA']])
+st.line_chart(df1[['Minutes_Avg_Month', 'Minutes_Avg_CMA']])
