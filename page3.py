@@ -18,7 +18,7 @@ def write_to_df_calories():
     with conn2.open("hylau-personal-dashboard-data/Calories_Daily.csv", mode='wb') as f:
         st.session_state.df2.to_csv(f)
 
-if 'df' not in st.session_state:
+if 'df2' not in st.session_state:
     conn2 = st.connection('s3', type=FilesConnection)
     st.session_state.df2 = conn2.read("hylau-personal-dashboard-data/Calories_Daily.csv", input_format="csv", ttl=600)
     st.session_state.df2.set_index('Date', inplace=True)
