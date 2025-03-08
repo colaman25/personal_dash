@@ -13,5 +13,5 @@ df['Minutes_Avg_Month'] = df['Minutes'].rolling(window=30).mean()
 df['Minutes_Avg_CMA'] = df['Minutes'].expanding().mean()
 overall_mean = df['Minutes'].mean()
 
+st.write(f'AVERAGE: {overall_mean:.2f}')
 st.line_chart(df[['Minutes_Avg_Month', 'Minutes_Avg_CMA']])
-st.write(f'AVERAGE: {overall_mean}')

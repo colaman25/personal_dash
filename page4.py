@@ -4,11 +4,14 @@ import numpy as np
 import time
 from st_files_connection import FilesConnection
 
-with st.form("my_form"):
-   st.write("Inside the form")
-   my_date = st.date_input('Date', value="today")
-   my_minutes = st.number_input('Minutes', min_value=0)
-   st.form_submit_button('Submit')
+conn = st.connection('s3', type=FilesConnection)
+df = conn.read("hylau-personal-dashboard-data/Calories_Daily.csv", input_format="csv", ttl=600)
+df.set_index('Date', inplace=True)
+df.sort_index(ascending=True, inplace=True)
 
-st.write(my_date)
-st.write(my_minutes)
+df['Calories_Avg_Month'] = df['Calories_Intake'].rolling(window=30).mean()
+df['Calories_Avg_CMA'] = df['Calories_Intake'].expanding().mean()
+overall_mean = df['Calories_Intake'].mean()
+
+st.write(f'AVERAGE: {overall_mean:.0f}')
+st.line_chart(df[['Calories_Avg_Month', 'Calories_Avg_CMA']])
