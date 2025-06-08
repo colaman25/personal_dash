@@ -27,9 +27,10 @@ if 'df2' not in st.session_state:
 
     st.dataframe(st.session_state.df2)
 
+exist_value_calories = st.session_state.df2['Calories_Intake'].iloc[0]
 
 with st.form("my_form"):
    st.write("Calories")
    st.date_input('Date', value='today', key='date')
-   st.number_input('Calories', min_value=0, key='calories')
+   st.number_input('Calories', min_value=0, value=exist_value_calories, key='calories')
    submit = st.form_submit_button('Submit', on_click=write_to_df_calories)
