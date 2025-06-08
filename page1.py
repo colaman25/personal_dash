@@ -26,10 +26,12 @@ if 'df1' not in st.session_state:
 
     st.dataframe(st.session_state.df1)
 
+exist_value_minutes = st.session_state.df1['Minutes'].iloc[0]
+exist_value_lapse = int(st.session_state.df1['Lure Lapse'].iloc[0])
 
 with st.form("my_form"):
    st.write("Daily Lapse")
    st.date_input('Date', value='today', key='date')
-   st.number_input('Minutes', min_value=0, key='minutes')
-   st.selectbox('Lapse', (0, 1), key='lapse')
+   st.number_input('Minutes', min_value=0, value = exist_value_minutes, key='minutes')
+   st.selectbox('Lapse', (0, 1), index=exist_value_lapse, key='lapse')
    submit = st.form_submit_button('Submit', on_click=write_to_df_lapse)
