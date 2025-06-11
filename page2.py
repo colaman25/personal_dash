@@ -21,5 +21,5 @@ annual_lapse_mean = df1['Lure Lapse'].tail(365).mean()
 st.write(f'AVERAGE: {overall_mean:.2f}')
 st.line_chart(df1[['Minutes_Avg_Month', 'Minutes_Avg_Year', 'Minutes_Avg_CMA']].tail(365*5))
 
-st.write(f'ANNUAL AVERAGE: {annual_lapse_mean:.4f}')
+st.write(f'ANNUAL AVERAGE: {annual_lapse_mean:.3f}')
 st.line_chart(df1[['Lapse_Avg_Month', 'Lapse_Avg_Year']].tail(365*1))
