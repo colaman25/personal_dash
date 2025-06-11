@@ -9,7 +9,7 @@ from st_files_connection import FilesConnection
 def write_to_df_calories():
 
     date_index = str(datetime.combine(st.session_state.date, datetime.min.time()))
-    st.session_state.df2.loc[date_index] = [st.session_state.calories]
+    st.session_state.df2.loc[date_index] = [st.session_state.calories, st.session_state.cans]
     st.session_state.df2.sort_index(ascending=False, inplace=True)
 
     st.dataframe(st.session_state.df2)
@@ -33,4 +33,5 @@ with st.form("my_form"):
    st.write("Calories")
    st.date_input('Date', value='today', key='date')
    st.number_input('Calories', min_value=0, value=exist_value_calories, key='calories')
+   st.number_input('Cans', min_value=0, key='cans')
    submit = st.form_submit_button('Submit', on_click=write_to_df_calories)
