@@ -20,18 +20,31 @@ def write_to_df_calories():
     f.close()
 
 
+# ----------------- Load Data -----------------
 if 'df2' not in st.session_state:
     conn2 = st.connection('s3', type=FilesConnection)
     st.session_state.df2 = conn2.read("hylau-personal-dashboard-data/Calories_Daily.csv", input_format="csv", ttl=600)
     st.session_state.df2.set_index('Date', inplace=True)
-
     st.dataframe(st.session_state.df2)
 
-exist_value_calories = st.session_state.df2['Calories_Intake'].iloc[0]
 
+# ----------------- Prepopulate Form -----------------
+# Prepare today's date in index format
+today_index = str(datetime.combine(date.today(), datetime.min.time()))
+
+# Check if today's row exists
+if today_index in st.session_state.df2.index:
+    exist_value_calories = int(st.session_state.df2.loc[today_index]['Calories_Intake'])
+    exist_value_cans = int(st.session_state.df2.loc[today_index]['Cans'])
+else:
+    exist_value_calories = 0
+    exist_value_cans = 0
+
+
+# ----------------- Input Form -----------------
 with st.form("my_form"):
    st.write("Calories")
    st.date_input('Date', value='today', key='date')
    st.number_input('Calories', min_value=0, value=exist_value_calories, key='calories')
-   st.number_input('Cans', min_value=0, key='cans')
+   st.number_input('Cans', min_value=0, value=exist_value_cans, key='cans')
    submit = st.form_submit_button('Submit', on_click=write_to_df_calories)
