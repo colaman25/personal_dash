@@ -14,7 +14,6 @@ babel==2.17.0
 backports.tarfile==1.2.0
 beautifulsoup4==4.13.4
 blinker==1.9.0
-boto3==1.39.12
 botocore==1.38.46
 cachetools==6.1.0
 certifi==2025.1.31
